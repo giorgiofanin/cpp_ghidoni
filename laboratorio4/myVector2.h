@@ -15,9 +15,12 @@ public:
     myVector2();
     myVector2(std::initializer_list<double>);
     myVector2(int  = 0, double * p = nullptr);
+    myVector2(myVector2&& a);
+    myVector2& operator=(myVector2&&);
 
     int size() const { return sz; }
 
+    
 
     double &operator[](int pos);
     double operator[](int pos) const;

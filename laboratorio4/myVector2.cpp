@@ -37,6 +37,15 @@ myVector2::myVector2(int size,double *p)
     }
 }
 
+myVector2::myVector2(myVector2&& a){
+    sz = a.sz;
+    elem = a.elem;
+
+    a.sz = 0;
+    a.elem = nullptr;
+}
+
+
 double &myVector2::operator[](int pos)
 {
     return elem[pos];
@@ -79,6 +88,18 @@ void myVector2::push_back(double value){
     elem[sz++]= value;
     
 }
+
+myVector2& myVector2::operator=(myVector2&& a){
+    delete[] elem;
+    elem = a.elem;
+    sz = a.sz;
+    bufferSz = a.bufferSz;
+    a.elem = nullptr;
+    a.sz = 0;
+    a.bufferSz = 0;
+    return * this;
+}
+
 
 // myVector2& operator=(const myVector2& a){
 //     double* newP =  new double[a.bufferSz*2];
