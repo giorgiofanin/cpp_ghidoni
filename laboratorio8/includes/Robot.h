@@ -1,16 +1,18 @@
+#ifndef ROBOT_H
+#define ROBOT_H
+#include "Maze.h"
+
+
 class Robot
 {
 private:
-    /* data */
+    int x;
+    int y;
 public:
-    Robot(/* args */);
-    ~Robot();
+    Robot(Maze& maze);
+    virtual void move(int x,int y);
+    void print();
 };
 
-Robot::Robot(/* args */)
-{
-}
+#endif
 
-Robot::~Robot()
-{
-}

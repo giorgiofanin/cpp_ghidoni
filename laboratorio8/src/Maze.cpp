@@ -12,6 +12,10 @@ Maze::Maze(){
         
         for(int i = 0; i < myText.length() && i < COLUMN;i++){ 
             arr[row][i] = myText[i];
+            if(myText[i] == 'S'){
+                posSX = i;
+                posSY = row;
+            }
         }
         for (int i = myText.length(); i < COLUMN; i++) {
             arr[row][i] = ' ';
@@ -32,20 +36,20 @@ void Maze::print(){
     }
 }
 
-char Maze::getCellMaze(int y,int x){
+char Maze::getCellMaze(int x,int y){
     if(y>= 9 || y<0 || x<0 || x>=9){
         Maze::Invalid{};
     }
-    return arr[y][x];
+    return (char)arr[y][x];
 }
 
 
 
-int main(){
-    Maze maze;
-    maze.print();
-    return 0;
-}
+// int main(){
+//     Maze maze;
+//     maze.print();
+//     return 0;
+// }
     
 
 
