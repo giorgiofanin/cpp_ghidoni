@@ -1,25 +1,30 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <string>
 #include "../includes/Maze.h"
 
 Maze::Maze(){
+
     std::ifstream MyReadFile("maze.txt");
     std::string myText;
 
     int row = 0;
     while (getline(MyReadFile, myText) && row < ROW) {
-        
+        std::vector<char> rowMap;
         for(int i = 0; i < myText.length() && i < COLUMN;i++){ 
-            arr[row][i] = myText[i];
+            
+            rowMap.push_back(myText[i]);
+
             if(myText[i] == 'S'){
                 posSX = i;
                 posSY = row;
             }
         }
         for (int i = myText.length(); i < COLUMN; i++) {
-            arr[row][i] = ' ';
+            std::vector<char> rowMap;
         }
+        mazeMap.push_back(rowMap);
         row++;
     }
 
@@ -28,19 +33,22 @@ Maze::Maze(){
 
 
 void Maze::print(){
-    for(int row = 0; row < ROW; row++){
-        for(int column = 0; column < COLUMN; column++){
-            std::cout<< arr[row][column];
+    
+    for(int row = 0; row < ROW && mazeMap.size(); row++){
+        for(int column = 0; column < COLUMN && column < mazeMap[row].size(); column++){
+            std::cout<< mazeMap[row][column];
         }
         std::cout<<std::endl;
     }
 }
 
-char Maze::getCellMaze(int x,int y){
+
+
+char Maze::getCellMaze(int y,int x){
     if(y>= 9 || y<0 || x<0 || x>=9){
-        Maze::Invalid{};
+        throw Maze::Invalid{};
     }
-    return (char)arr[y][x];
+    return (char)mazeMap[y][x];
 }
 
 
