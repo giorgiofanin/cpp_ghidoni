@@ -15,7 +15,7 @@ int RandomRobot::generaRandomPiastrella(){
 
 void RandomRobot::move(){
     //genero numero random e in base da 1 a 8 mi muovo nord ovest/nord/ nord est ...
-    
+    mosse.clear();
     while(true){
         int piastrella = generaRandomPiastrella();
         int xPiastrella = getX();

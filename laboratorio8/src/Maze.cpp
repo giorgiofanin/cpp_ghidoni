@@ -5,7 +5,7 @@
 #include "../includes/Maze.h"
 
 Maze::Maze(){
-
+    
     std::ifstream MyReadFile("maze.txt");
     std::string myText;
 

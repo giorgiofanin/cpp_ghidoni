@@ -6,12 +6,9 @@
 
 class RandomRobot : public Robot
 {
-private:
-    
 public:
     RandomRobot(Maze& maze);
     int generaRandomPiastrella();
-    void risolviPercorso();
     virtual void  move() override;
 };
 

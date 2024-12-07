@@ -46,7 +46,7 @@ void Robot::print()
             }
             std::cout << std::endl;
         }
-        sleep(0.5);
+        usleep(100000);
         system("clear");
         
     }
@@ -55,17 +55,17 @@ void Robot::print()
     std::cout << "mosse fatte :" << mosse.size()<< std::endl;
 
     for (int row = 0; row < maze.getRow(); row++)
+    {
+        for (int column = 0; column < maze.getColumn(); column++)
         {
-            for (int column = 0; column < maze.getColumn(); column++)
-            {
-                if(column == mosse[mosse.size()-1][1] && row == mosse[mosse.size()-1][0]){
-                    std::cout << 'R';
-                }
-                else{
-                    std::cout << mazeMap[row][column];
-                }
-                
+            if(column == mosse[mosse.size()-1][1] && row == mosse[mosse.size()-1][0]){
+                std::cout << 'R';
             }
-            std::cout << std::endl;
+            else{
+                std::cout << mazeMap[row][column];
+            }
+            
         }
+        std::cout << std::endl;
+    }
 }
