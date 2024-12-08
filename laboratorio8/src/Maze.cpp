@@ -6,7 +6,7 @@
 
 Maze::Maze(){
     
-    std::ifstream MyReadFile("maze.txt");
+    std::ifstream MyReadFile("../build/maze.txt");
     std::string myText;
 
     int row = 0;
