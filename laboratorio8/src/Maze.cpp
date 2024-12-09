@@ -4,32 +4,32 @@
 #include <string>
 #include "../includes/Maze.h"
 
-Maze::Maze(){
-    
+Maze::Maze() {
     std::ifstream MyReadFile("../build/maze.txt");
-    std::string myText;
+    if (!MyReadFile.is_open()) {
+        throw std::runtime_error("Impossibile aprire il file maze.txt");
+    }
 
+    std::string myText;
     int row = 0;
     while (getline(MyReadFile, myText) && row < ROW) {
         std::vector<char> rowMap;
-        for(int i = 0; i < myText.length() && i < COLUMN;i++){ 
-            
+        for (int i = 0; i < myText.length() && i < COLUMN; i++) {
             rowMap.push_back(myText[i]);
-
-            if(myText[i] == 'S'){
+            if (myText[i] == 'S') {
                 posSX = i;
                 posSY = row;
             }
         }
         for (int i = myText.length(); i < COLUMN; i++) {
-            std::vector<char> rowMap;
+            rowMap.push_back(' ');  // Completa la riga
         }
         mazeMap.push_back(rowMap);
         row++;
     }
-
     MyReadFile.close();
 }
+
 
 
 void Maze::print(){

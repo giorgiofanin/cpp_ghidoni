@@ -5,18 +5,9 @@
 #include <unistd.h>
 #include "../includes/Robot.h"
 
-Robot::Robot(Maze &maze)
-{
-    this->maze = maze;
-    move();
-}
+Robot::Robot(){}
 
-void Robot::move()
-{
-    this->x = maze.getPosSX();
-    this->y = maze.getPosSY();
-    mosse.push_back({y,x});
-}
+
 
 void Robot::print()
 {

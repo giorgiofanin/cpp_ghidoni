@@ -5,7 +5,7 @@
 #include "../includes/RightHandRuleRobot.h"
 
 
-RightHandRuleRobot::RightHandRuleRobot(Maze& maze) : Robot(maze){
+RightHandRuleRobot::RightHandRuleRobot() : Robot(){
     srand(static_cast<unsigned>(time(0)));
 }
 
@@ -13,95 +13,90 @@ int RightHandRuleRobot::generaRandomPiastrella(){
     return rand() % 8;
 }
 
-void RightHandRuleRobot::move(){
+
+
+void RightHandRuleRobot::move(Maze& maze) {
+    
+    //imposto la prima mossa che è la piastrella dove si trova R
+
+    int xIniziale = maze.getPosSX();
+    int yIniziale = maze.getPosSY();
+    setY(yIniziale);
+    setX(xIniziale);
+    mosse.push_back({yIniziale,xIniziale});
+    
     int xPiastrella = getX();
     int yPiastrella = getY();
     
-
-
     mosse.clear();
 
-    //cerca muro
     bool muro = false;
     bool loop = false;
-    
-    while(!muro){
-        for(int i=1;i<8;i+=2){
-            if(maze.getCellMaze(getCoordinatePiastrellaVicina(i)[0],getCoordinatePiastrellaVicina(i)[1])=='*'){
-                muro = true;
-                destra = i;
-                break;
+
+    while (!muro) {
+        for (int i = 1; i < 8; i += 2) {
+            try {
+                if (maze.getCellMaze(getCoordinatePiastrellaVicina(i)[0], getCoordinatePiastrellaVicina(i)[1]) == '*') {
+                    muro = true;
+                    destra = i;
+                    break;
+                }
+            } catch (Maze::Invalid&) {
+                continue;  // Se le coordinate sono invalid, salta al prossimo controllo
             }
         }
-        if(!muro){
+
+        if (!muro) {
             bool check = false;
-            while(!check){
-                try{
+            while (!check) {
+                try {
                     int piastrella = generaRandomPiastrella();
-                    if(maze.getCellMaze(getCoordinatePiastrellaVicina(piastrella)[0],getCoordinatePiastrellaVicina(piastrella)[1])=='E'){
+
+                    if (maze.getCellMaze(getCoordinatePiastrellaVicina(piastrella)[0], getCoordinatePiastrellaVicina(piastrella)[1]) == 'E') {
                         check = true;
                         setY(getCoordinatePiastrellaVicina(piastrella)[0]);
                         setX(getCoordinatePiastrellaVicina(piastrella)[1]);
                         mosse.push_back(getCoordinatePiastrellaVicina(piastrella));
                         loop = true;
                         break;
-                    }
-                    else if(maze.getCellMaze(getCoordinatePiastrellaVicina(piastrella)[0],getCoordinatePiastrellaVicina(piastrella)[1])==' '){
+                    } else if (maze.getCellMaze(getCoordinatePiastrellaVicina(piastrella)[0], getCoordinatePiastrellaVicina(piastrella)[1]) == ' ') {
                         check = true;
                         setY(getCoordinatePiastrellaVicina(piastrella)[0]);
                         setX(getCoordinatePiastrellaVicina(piastrella)[1]);
                         mosse.push_back(getCoordinatePiastrellaVicina(piastrella));
                         break;
                     }
-                }
-                catch(Maze::Invalid){
-                    continue;
+                } catch (Maze::Invalid&) {
+                    continue;  // Se le coordinate sono invalid, riprova
                 }
             }
-            
         }
     }
 
+    while (!loop) {
+        try {
+            int direzione = getDirezione(yPiastrella, xPiastrella);
 
-    
-
-    
-    while (!loop)
-    {
-        //std::cout<<"i: "<<i<<std::endl;
-
-        //std::cout<<"new y:"<<yPiastrella<<" new  x:"<<xPiastrella<<std::endl;
-        int direzione = getDirezione(yPiastrella,xPiastrella);
-        // std::cout<<"direzione "<< direzione<<std::endl;
-        // std::cout<<"destra "<< destra<<std::endl;
-
-
-
-        if(direzione == 100){
-            mosse.push_back(getCoordinatePiastrellaVicina(destra));
-            yPiastrella = getCoordinatePiastrellaVicina(destra)[0];
-            xPiastrella = getCoordinatePiastrellaVicina(destra)[1];
-            setX(xPiastrella);
-            setY(yPiastrella);
-            loop = true;
+            if (direzione == 100) {
+                mosse.push_back(getCoordinatePiastrellaVicina(destra));
+                yPiastrella = getCoordinatePiastrellaVicina(destra)[0];
+                xPiastrella = getCoordinatePiastrellaVicina(destra)[1];
+                setX(xPiastrella);
+                setY(yPiastrella);
+                loop = true;
+            } else if (direzione != -1 && maze.getCellMaze(getCoordinatePiastrellaVicina(direzione)[0], getCoordinatePiastrellaVicina(direzione)[1]) == ' ') {
+                mosse.push_back(getCoordinatePiastrellaVicina(direzione));
+                yPiastrella = getCoordinatePiastrellaVicina(direzione)[0];
+                xPiastrella = getCoordinatePiastrellaVicina(direzione)[1];
+                setX(xPiastrella);
+                setY(yPiastrella);
+            }
+        } catch (Maze::Invalid&) {
+            continue;  // Se le coordinate sono invalid, riprova
         }
-
-
-
-        if(direzione != -1 && maze.getCellMaze(getCoordinatePiastrellaVicina(direzione)[0],getCoordinatePiastrellaVicina(direzione)[1])==' ' ){
-            //std::cout<<"entra"<<std::endl;
-            mosse.push_back(getCoordinatePiastrellaVicina(direzione));
-            yPiastrella = getCoordinatePiastrellaVicina(direzione)[0];
-            xPiastrella = getCoordinatePiastrellaVicina(direzione)[1];
-            setX(xPiastrella);
-            setY(yPiastrella);
-            //std::cout<<"y: "<<yPiastrella<<" x: "<<xPiastrella<<std::endl;
-
-        }
-        //std::cout<<"------------"<<std::endl;
     }
-    
 }
+
 
 int RightHandRuleRobot::getDirezione(int y,int x){
 

@@ -4,7 +4,7 @@
 #include "../includes/RandomRobot.h"
 
 
-RandomRobot::RandomRobot(Maze& maze) : Robot(maze){
+RandomRobot::RandomRobot() : Robot(){
     srand(static_cast<unsigned>(time(0)));
 }
 
@@ -13,8 +13,17 @@ int RandomRobot::generaRandomPiastrella(){
     return rand() % 8; 
 }
 
-void RandomRobot::move(){
+void RandomRobot::move(Maze& maze){
     //genero numero random e in base da 1 a 8 mi muovo nord ovest/nord/ nord est ...
+    
+    int xIniziale = maze.getPosSX();
+    int yIniziale = maze.getPosSY();
+    setY(yIniziale);
+    setX(xIniziale);
+    mosse.push_back({yIniziale,xIniziale});
+
+
+    
     mosse.clear();
     while(true){
         int piastrella = generaRandomPiastrella();

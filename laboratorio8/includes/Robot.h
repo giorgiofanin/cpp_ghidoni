@@ -14,8 +14,8 @@ protected:
     std::vector<std::vector<int>> mosse;
     Maze maze;
 public:
-    Robot(Maze& maze);
-    virtual void move();
+    Robot();
+    virtual void move(Maze& maze) = 0;
     void print();
     int getX(){return x;};
     int getY(){return y;};

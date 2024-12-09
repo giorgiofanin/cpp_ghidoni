@@ -7,14 +7,14 @@
 
 int main(){
     Maze maze;
-    //maze.print();
+    maze.print();
 
-    // RandomRobot robot(maze);
-    // robot.move();
-    // robot.print();
+    RandomRobot robot;
+    robot.move(maze);
+    robot.print();
 
-    RightHandRuleRobot robotRight(maze);
-    robotRight.move();
+    RightHandRuleRobot robotRight;
+    robotRight.move(maze);
     robotRight.print();
 
 

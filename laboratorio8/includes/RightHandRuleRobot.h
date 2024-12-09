@@ -9,11 +9,11 @@ class RightHandRuleRobot : public Robot
 private:
     int destra;
 public:
-    RightHandRuleRobot(Maze& maze);
+    RightHandRuleRobot();
     int generaRandomPiastrella();
     int getDirezione(int y,int x);
     std::vector<int> getCoordinatePiastrellaVicina(int nPiastrella);
-    virtual void  move() override;
+    virtual void  move(Maze& maze) override;
 };
 
 

@@ -7,9 +7,9 @@
 class RandomRobot : public Robot
 {
 public:
-    RandomRobot(Maze& maze);
+    RandomRobot();
     int generaRandomPiastrella();
-    virtual void  move() override;
+    virtual void  move(Maze& maze) override;
 };
 
 #endif
